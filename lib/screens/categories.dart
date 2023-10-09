@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:meal_app/data/dummy_data.dart';
+import 'package:meal_app/widgets/category_grid_item.dart';
 
 class CategoriesScreen extends StatelessWidget {
   const CategoriesScreen({super.key});
@@ -10,6 +12,7 @@ class CategoriesScreen extends StatelessWidget {
         title: const Text("Pick your category"),
       ),
       body: GridView(
+        padding: const EdgeInsets.all(24),
         // using grid view
         //A delegate that controls the layout of the children within the [GridView].
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -18,13 +21,9 @@ class CategoriesScreen extends StatelessWidget {
           crossAxisSpacing: 20, // space between column
           mainAxisSpacing: 20, // space between horizontal items and vertical
         ),
-        children: const [
-          Text('1', style: TextStyle(color: Colors.amber)),
-          Text('2', style: TextStyle(color: Colors.amber)),
-          Text('3', style: TextStyle(color: Colors.amber)),
-          Text('4', style: TextStyle(color: Colors.amber)),
-          Text('5', style: TextStyle(color: Colors.amber)),
-          Text('6', style: TextStyle(color: Colors.amber)),
+        children: [
+          for (final category in availableCategories)
+            CategoryGridItem(category: category)
         ],
       ),
     );
