@@ -2,14 +2,20 @@ import 'package:meal_app/models/category.dart';
 import 'package:flutter/material.dart';
 
 class CategoryGridItem extends StatelessWidget {
-  const CategoryGridItem({super.key, required this.category});
+  const CategoryGridItem({
+    super.key,
+    required this.category,
+    required this.onSelectedCategory,
+  });
 
   final Category category;
+  final void Function() onSelectedCategory;
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
       // to make widget tap able also u can use GestureDetector but there is no effect
-      onTap: () {},
+      onTap: onSelectedCategory,
       splashColor: Theme.of(context).primaryColor, // make visual effect
       borderRadius: BorderRadius.circular(16),
       child: Container(
