@@ -48,14 +48,17 @@ class _TabsScreenState extends State<TabsScreen> {
     });
   }
 
-  void _selectScreen(String identifier) {
+  // async function will await return data from push future
+  void _selectScreen(String identifier) async {
     Navigator.of(context).pop(); // will close the drawer
     if (identifier == 'filters') {
-      Navigator.of(context).push(
+      // return result await function of push
+      final result = await Navigator.of(context).push<Map<Filter, bool>>(
         MaterialPageRoute(
           builder: (ctx) => const FiltersScreen(),
         ),
       );
+      print(result);
     }
   }
 
