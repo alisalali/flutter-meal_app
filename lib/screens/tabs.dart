@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:meal_app/data/dummy_data.dart';
 import 'package:meal_app/models/meal.dart';
 import 'package:meal_app/screens/categories.dart';
 import 'package:meal_app/screens/filters.dart';
 import 'package:meal_app/screens/meals.dart';
 import 'package:meal_app/widgets/main_drawer.dart';
+
+const kInitialFilters = {
+  Filter.glutenFree: false,
+  Filter.lactoseFree: false,
+  Filter.vegetarian: false,
+  Filter.vegan: false,
+};
 
 class TabsScreen extends StatefulWidget {
   const TabsScreen({super.key});
@@ -17,6 +25,12 @@ class TabsScreen extends StatefulWidget {
 class _TabsScreenState extends State<TabsScreen> {
   int _selectedPageIndex = 0;
   final List<Meal> _favoriteMeals = [];
+  Map<Filter, bool> _selectedFilter = {
+    Filter.glutenFree: false,
+    Filter.lactoseFree: false,
+    Filter.vegetarian: false,
+    Filter.vegan: false,
+  };
 
   void _showInfoMassage(String message) {
     ScaffoldMessenger.of(context).clearSnackBars();
@@ -48,24 +62,46 @@ class _TabsScreenState extends State<TabsScreen> {
     });
   }
 
-  // async function will await return data from push future
+  // async function will await return data from push future for drawer widget
   void _selectScreen(String identifier) async {
     Navigator.of(context).pop(); // will close the drawer
     if (identifier == 'filters') {
       // return result await function of push
       final result = await Navigator.of(context).push<Map<Filter, bool>>(
         MaterialPageRoute(
-          builder: (ctx) => const FiltersScreen(),
+          builder: (ctx) => FiltersScreen(currentFilter: _selectedFilter),
         ),
       );
-      print(result);
+
+      //update the initial value of Map<Filter,bool> _selectedFilter
+      setState(() {
+        // (??) operator to check the value if its null will assign with new value
+        _selectedFilter = result ?? kInitialFilters;
+      });
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final availableMeal = dummyMeals.where((meal) {
+      if (_selectedFilter[Filter.glutenFree]! && !meal.isGlutenFree) {
+        return false;
+      }
+      if (_selectedFilter[Filter.lactoseFree]! && !meal.isLactoseFree) {
+        return false;
+      }
+      if (_selectedFilter[Filter.vegetarian]! && !meal.isVegetarian) {
+        return false;
+      }
+      if (_selectedFilter[Filter.vegan]! && !meal.isVegan) {
+        return false;
+      }
+      return true;
+    }).toList();
+
     Widget activePage = CategoriesScreen(
       onToggleFavorite: _toggledMealFavoriteStatus,
+      availableMeals: availableMeal,
     );
     var activePateTitle = 'Categories';
 
