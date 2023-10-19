@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:meal_app/models/meal.dart';
 import 'package:meal_app/screens/categories.dart';
-import 'package:meal_app/screens/filters.dart';
 import 'package:meal_app/screens/meals.dart';
 import 'package:meal_app/widgets/main_drawer.dart';
 
 import 'package:meal_app/provider/meals_provider.dart';
 import 'package:meal_app/provider/favorites_provider.dart';
+import 'package:meal_app/provider/filters_provider.dart';
 
 const kInitialFilters = {
   Filter.glutenFree: false,
