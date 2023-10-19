@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:meal_app/screens/tabs.dart';
+import 'package:riverpod/riverpod.dart';
 
 // Define theme property
 final theme = ThemeData(
@@ -14,7 +16,8 @@ final theme = ThemeData(
 );
 
 void main() {
-  runApp(const MyApp());
+  //wrap the app with providerScope
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
