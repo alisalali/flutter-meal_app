@@ -7,7 +7,7 @@ import 'package:meal_app/screens/filters.dart';
 import 'package:meal_app/screens/meals.dart';
 import 'package:meal_app/widgets/main_drawer.dart';
 
-import 'package:meal_app/meals_provider.dart';
+import 'package:meal_app/provider/meals_provider.dart';
 
 const kInitialFilters = {
   Filter.glutenFree: false,
